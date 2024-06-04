@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>illusiontechnique</title> 
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/images/favicons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">  
+  <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
+  <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
+  <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
+  <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+  <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
+
+  <link href="css/unicorns_styles.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="js/AnimationManager.js"></script>
+  <script src="js/AudioManager.js"></script>
+  <script src="js/HUD.js"></script>
+  <script src="js/RaycasterWrapper.js"></script>
+  <script src="js/Reticle.js"></script>
+  <script src="js/ActionStateManager.js"></script>
+  <script src="js/illusiontechnique_unicorns.js" ></script>
+  <script src="js/TextureManager.js"></script>
+
+
+
+</head>
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+  <main>
+    <div class="page-loader">
+      <div class="loader">Loading...</div>
+    </div>
+
+
+    <div class="main">
+     <canvas id="canvasUnicorn">   </canvas>   
+
+     <section class="module portfolio-page-header" >
+
+
+      <div class="titan-caption">
+
+
+
+
+
+        <div id="container">
+         <div   id="msg_panel"></div> 
+         <div id="logos_container">
+          <div class="abs_center_wrapper">
+            <img id="logo_base" src="assets/marks.svg">
+          </div>
+
+          <div id="error_wrapper" class="hidden logo_wrapper">
+            <div class="abs_center_wrapper">
+              <img id="logo_error" src="assets/marks.svg">
+            </div>
+            <div class="abs_center_wrapper">
+              <div id= "qr_code">
+                <p><img src="./assets/qr_xr_unicorn.png"></p></div>
+                <div id="error_text">
+                  <p>Please use a mobile device with Chrome browser v81+ <br> Copy this website URL into Chrome or scan the QR code with your device!</p>
+                  
+                </div>
+              </div>
+            </div>
+            <div id="loading_wrapper" class="hidden logo_wrapper">
+              <div class="abs_center_wrapper">
+                <img id="logo_loading" src="assets/marks.svg">
+              </div>
+              <div class="abs_center_wrapper">
+                <p id="loading_text">XR Unicorn<br>Getting ready...</p>
+              </div>
+            </div>
+            <div id="enter_wrapper" class="hidden logo_wrapper">
+              <div class="abs_center_wrapper">
+                <button id="btn_enter_ar" class="invisible_btn" disabled>
+                  <img id="logo_enter" src="assets/marks.svg">
+
+                </button>
+
+              </div>
+            </div>
+          </div>
+          <button id="btn_info" style="color: white;">Options</button>
+        </div>
+
+        <div id="info_panel_container">
+          <div id="info_panel">
+
+
+            <div class="icon_list_item">
+             <p id="info_list_title"><em>SHADOW TYPE</em></p>
+           </div>
+
+           <div class="icon_list_item">            
+             <p>This is used for "shadow-matching" to your environment. <br>Place the Unicorn opposite to the Real-world light source and shadow should follow.</p>
+           </div>
+
+           <div class="icon_list_item">
+             <label id="btnSoundsLbl"><input type="checkbox" id="btnShadows" unchecked title="Toggle Long Shadows"> Enable Long Shadows.</label>
+           </div>
+
+
+           <div class="icon_list_item">
+             <p id="info_list_title"><em>AUDIO</em></p>
+           </div>
+
+           <div class="icon_list_item">
+            <p>Enable/Disable Sounds</p>
+          </div>
+
+          <div class="icon_list_item">
+            <label id="btnSoundsLbl"><input type="checkbox" id="btnSounds" checked title="Toggle Audio"> Button Sounds.</label>
+          </div>
+
+          <div class="close_btn">
+           <button id="btn_close_info">X</button>
+         </div>
+       </div>
+     </div>
+
+
+   </div>
+
+ </section>
+
+
+<!--  <section>
+   <a name="about"></a>
+   <div class="container">
+    <div class="row landing-image-text">
+
+
+      <div class="col-sm-6 col-sm-push-6">
+        <img class="center-block" src="images/screenshots/Screenshot_006.jpg" alt="">
+      </div>
+
+      <div class="col-sm-6 col-sm-pull-6">
+        <h2 class="font-alt">UNICORN XR - HOW TO</h2>
+
+        <p>The following UI elements are available:</p>
+
+
+        <div class="icon_list_item">
+          <img src="assets/icon_move.png">
+          <p><b><em>Scan Area</em></b>: <br>
+            This icon indicates that the user should move their device around to help build the underlying environment map.
+          </p>
+        </div>
+
+        <div class="icon_list_item">
+          <img src="assets/icon_exit.png">
+          <p><b>Exit AR</b>: <br>Press this to exit..</p>
+        </div>
+        <div class="icon_list_item">
+          <img src="assets/icon_remove.png">
+          <p><b>Restart Placement</b>:<br> Reactivates the target, so the model can be repositioned.<br>
+          </p>
+        </div>
+        <div class="icon_list_item">
+          <img src="assets/icon_scale.png">
+          <p><b>Toggle scale</b>:<br> Toggles the model between miniature and full-size.<br>
+          </p>
+        </div>
+        <div class="icon_list_item">
+          <img src="assets/icon_flying.png">
+          <p><b><em>Wings</em></b>:<br>Toggles Flying unicorn<br>
+          </p>
+        </div>
+        <div class="icon_list_item">
+          <img src="assets/icon_capture.png">
+          <p><b><em>Capture</em></b>:<br> Take a screenshot and share the experience!<br>
+          </p>
+        </div>
+        <p>When all is loaded and WebXR is available, you can enter the experience by pressing on the glowing unicorn. If its the first time, the browser will ask for camera permissions. Once the experience is loaded, move your device around until a target is shown. Touch the target to place a unicorn in your environment.</p> <p> For Augemented Reality to work, the browser's underlying XR framework needs to track your environment. It does this by progressively creating a 3D map while you move your device. Users are encouraged to gently move their device around. A well lit environment is strongly recommended.</p> <p>PLEASE NOTE: The WebXR standard is fairly new, your browser might not yet support it; Chrome v81 and up should support it out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="module bg-dark parallax-bg landing-screenshot" data-background="assets/images/landing/screenshot_bg.png">
+
+ <a name="screenshots"></a>
+ <div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h2 class="module-title font-alt">ScreenShots</h2>
+    </div>
+  </div>
+  <div class="row client">
+    <div class="owl-carousel text-center" data-items="4" data-pagination="true" data-navigation="false">
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_001.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_002.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_003.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_004.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_005.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_006.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_007.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_008.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_009.jpg" alt="App Screenshot"></div>
+      </div>
+      <div class="owl-item">
+        <div class="col-sm-12"><img src="images/screenshots/Screenshot_010.jpg" alt="App Screenshot"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+ -->
+
+
+<hr class="divider-d">
+
+<footer class="footer bg-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="copyright font-alt">&copy; 2021&nbsp;<a href="index.html">illusiontechnique</a></p>
+      </div>
+              <!-- <div class="col-sm-6">
+                <div class="footer-social-links"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </footer>
+        <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+      </div>
+    </main>
+    <!--  
+    JavaScripts
+    =============================================
+  -->
+
+<!--   <script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+  <script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
+  <script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+  <script src="assets/lib/flexslider/jquery.flexslider.js"></script>
+  <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+  <script src="assets/lib/smoothscroll.js"></script>
+  <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+  <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+  <script src="assets/js/plugins.js"></script> -->
+  <!-- <script src="assets/js/main.js"></script> -->
+</body>
+</html>
