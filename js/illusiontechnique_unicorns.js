@@ -193,8 +193,11 @@ function init() {
 	// Setup listener and check current state of the Options checkboxes.
 	const btnSndsInput = document.getElementById("btnSounds");
 	const btnShadowsInput = document.getElementById("btnShadows");
-	g_btnSndsActive = btnSndsInput.checked;
-	g_btnShadowsActive = btnShadowsInput.unchecked;
+    g_btnSndsActive = btnSndsInput.checked;
+    // HTML inputs don't have an `unchecked` property. The checked state is
+    // determined solely by the `checked` attribute, so we need to read the
+    // `checked` property here.
+    g_btnShadowsActive = btnShadowsInput.checked;
 
 	btnSndsInput.addEventListener("change", () => {
 		g_btnSndsActive = btnSndsInput.checked;
