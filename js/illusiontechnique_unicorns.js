@@ -238,7 +238,7 @@ function loadResources() {
 	function loadGltfModel(filepath) {
 
 		
-		const loader = new THREE.GLTFLoader();
+		const loader = new window.GLTFLoader();
 		return new Promise((resolve, reject) => {
 			loader.load(filepath, resolve, null, reject);
 
