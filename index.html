@@ -39,14 +39,7 @@
      
    <link href="css/unicorns_styles.css" rel="stylesheet">
  
-  <script type="module">
-    // Provide modern three as a global so existing non-module scripts keep working
-    import * as THREE from '/node_modules/three/build/three.module.js';
-    import { GLTFLoader } from '/node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-    window.THREE = THREE;
-    // expose GLTFLoader constructor for legacy usage if needed
-    window.GLTFLoader = GLTFLoader;
-  </script>
+  <script type="module" src="/src/main.js"></script>
   <!-- Legacy loader files remain in js/lib for compatibility -->
   <script src="js/AnimationManager.js"></script>
   <script src="js/AudioManager.js"></script>
