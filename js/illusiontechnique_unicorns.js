@@ -93,14 +93,23 @@ let strDownloadMime = "image/octet-stream";
 
 
 function reportXRDebug(payload) {
-	// Update to your own backend endpoint.
-	fetch("https://your-server.example.com/xr-debug", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(payload),
-	}).catch((e) => {
-		console.warn("XR debug report failed:", e);
-	});
+	// Posts debug information to a log endpoint. By default this points to
+	// a local log server at http://localhost:3001/xr-debug. You can override
+	// the endpoint by setting `window.XR_DEBUG_ENDPOINT` from the page.
+	try {
+		const endpoint = (window.XR_DEBUG_ENDPOINT && typeof window.XR_DEBUG_ENDPOINT === 'string')
+			? window.XR_DEBUG_ENDPOINT
+			: "http://localhost:3001/xr-debug";
+		fetch(endpoint, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		}).catch((e) => {
+			console.warn("XR debug report failed:", e);
+		});
+	} catch (e) {
+		console.warn("XR debug report error:", e);
+	}
 }
 
 function init() {

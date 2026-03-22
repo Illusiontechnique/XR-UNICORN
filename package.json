@@ -6,6 +6,7 @@
     "dev": "vite",
     "dev:host": "vite --host",
     "dev:tunnel": "npx ngrok http 5173 --host-header=\"localhost:5173\"",
+    "debug:log-server": "node logs/log-server.js",
     "build": "vite build",
     "preview": "vite preview"
   },
