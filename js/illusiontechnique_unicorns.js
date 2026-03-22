@@ -151,7 +151,7 @@ function init() {
 	const btnSndsInput = document.getElementById("btnSounds");
 	const btnShadowsInput = document.getElementById("btnShadows");
 	g_btnSndsActive = btnSndsInput.checked;
-	g_btnShadowsActive = btnShadowsInput.unchecked;
+	g_btnShadowsActive = btnShadowsInput.checked;
 
 	btnSndsInput.addEventListener("change", () => {
 		g_btnSndsActive = btnSndsInput.checked;
@@ -297,7 +297,9 @@ function loadResources() {
 	}
 
 	function setupXRSession() {
-		g_audioMgr.playAudio("startSound", g_modelMesh);
+		if ( g_audioMgr && g_audioMgr.getAudioBuffer("startSound") ) {
+			g_audioMgr.playAudio("startSound", g_modelMesh);
+		}
 		if ( !g_xrSession ) {
 		// Need to request hit-test upon session request. See example:
 		// https://web.dev/ar-hit-test/
@@ -1016,10 +1018,10 @@ function handleSelectDelayed() {
 		// by using the mesh's own y coordinate in lookAt().
 		g_modelMesh.lookAt(lookAtPos.x, g_modelMesh.position.y, lookAtPos.z);
 		
-		//part of maintain shoadows directly above model?
-		if(g_scene.shadowLight){
-			shadowLight.shadow.update( spotLight );
-		}	
+		// (shadow refresh is handled by Three.js render loop; ensure no undefined symbol crash)
+		// if (g_scene.shadowLight) {
+		// 	g_scene.shadowLight.shadow.update();
+		// }
 
 		g_modelMesh.visible = true;
 		g_modelMesh.receiveShadow = true;
