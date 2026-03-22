@@ -1,0 +1,14 @@
+/* Minimal stub stylesheet to ensure the site has basic styles when
+   vendor CSS files are missing during dev. It imports the project's
+   main unicorn styles so the page remains usable. */
+@import url("../../css/unicorns_styles.css");
+
+/* Small defaults to make layout reasonable if vendor CSS missing */
+body {
+  background: #000;
+  color: #eee;
+}
+
+.navbar {
+  position: relative;
+}

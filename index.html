@@ -81,7 +81,16 @@
         </div>
 
       </nav>
-      <div class="main">
+      <div id="xr-not-supported" class="hidden">
+        <div class="no-xr-box">
+          <h2>AR Unavailable</h2>
+          <p>This device/browser does not support WebXR immersive-ar. Please open on a compatible mobile device with Chrome (Android) or Safari with WebXR support.</p>
+          <p>You can also scan this QR code from a supported device:</p>
+          <img src="assets/qr_xr_unicorn.png" alt="Scan for AR" style="width:160px;height:auto;">
+        </div>
+      </div>
+
+      <div id="xr-content" class="main hidden">
        <canvas id="canvasUnicorn">   </canvas>   
 
         <section class="module portfolio-page-header" >

@@ -1,7 +1,3 @@
-//jasonhendrik - illusiontechnique 2021 - prototype v1
-
-
-
 function showMsg(msg, type) {
 	
 	let msgStr = msg.message || msg;
@@ -96,9 +92,67 @@ let strDownloadMime = "image/octet-stream";
 
 
 
+function reportXRDebug(payload) {
+	// Update to your own backend endpoint.
+	fetch("https://your-server.example.com/xr-debug", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+	}).catch((e) => {
+		console.warn("XR debug report failed:", e);
+	});
+}
+
 function init() {
 	let msgPane = document.getElementById("msg_panel");
 	msgPane.addEventListener("click", hideMsg);
+
+	// If ?debug=1 is present in the URL, expose simple XR detection
+	// information on the message panel so it's visible on mobile
+	// devices without remote debugging.
+	try {
+		const urlParams = new URLSearchParams(window.location.search);
+		if ( urlParams.get("debug") === "1" ) {
+			const debugMsg = (s) => {
+				const p = document.getElementById("msg_panel");
+				p.classList.add("active");
+				p.textContent = s;
+				console.log(s);
+			};
+
+			// Surface runtime errors and unhandled promise rejections
+			window.addEventListener("error", (ev) => {
+				try {
+					debugMsg(`ERROR: ${ev.message} @ ${ev.filename}:${ev.lineno}:${ev.colno}`);
+				} catch (e) { /* ignore */ }
+			});
+			window.addEventListener("unhandledrejection", (ev) => {
+				try {
+					const reason = ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason);
+					debugMsg(`UNHANDLED_PROMISE_REJECTION: ${reason}`);
+				} catch (e) { /* ignore */ }
+			});
+			// Also forward console.error messages
+			const _origConsoleError = console.error.bind(console);
+			console.error = function(...args) {
+				try { debugMsg(`console.error: ${args.map(a => (a && a.message) ? a.message : String(a)).join(' | ')}`); } catch (e) {}
+				_origConsoleError(...args);
+			};
+			debugMsg("DEBUG: checking navigator.xr...");
+			debugMsg(`navigator.xr present: ${Boolean(navigator.xr)}`);
+			if ( navigator.xr ) {
+				navigator.xr.isSessionSupported("immersive-ar")
+				.then((supported) => {
+					debugMsg(`isSessionSupported(\"immersive-ar\") => ${supported}`);
+				})
+				.catch((err) => {
+					debugMsg(`isSessionSupported error: ${err && err.message ? err.message : String(err)}`);
+				});
+			}
+		}
+	} catch (e) {
+		console.warn("Debug helper error:", e);
+	}
 
 
 	// Show the info panel when #btn_info is clicked.
@@ -112,15 +166,62 @@ function init() {
 		
 	});
 
+	// Temporary: ensure the Enter AR button reports clicks immediately
+	// (useful for mobile debug when resource loading hasn't attached
+	// the main handler yet). This will also attempt to start the
+	// session so we can see errors on the message panel.
+	(function() {
+		const btnAR_fallback = document.getElementById("btn_enter_ar");
+		if (!btnAR_fallback) return;
+		btnAR_fallback.addEventListener("click", () => {
+			try {
+				showMsg("Enter AR button clicked — attempting to start session...", "debug");
+			} catch (e) { console.warn(e); }
+			try {
+				// setupXRSession is hoisted; calling it will either start
+				// the session or surface an error to the message panel.
+				setupXRSession();
+			} catch (err) {
+				showMsg(err, "error");
+			}
+		});
+	})();
+
 	// Check if WebXR and "immersive-ar" is available. And if so, then start
 	// loading the resources.
+	const xrNotSupported = document.getElementById("xr-not-supported");
+	const xrContent = document.getElementById("xr-content");
+	const showNotSupported = () => {
+		if (xrNotSupported) xrNotSupported.classList.remove("hidden");
+		if (xrContent) xrContent.classList.add("hidden");
+		// keep main page visible as fallback content
+	};
+
+	const showSupported = () => {
+		if (xrNotSupported) xrNotSupported.classList.add("hidden");
+		if (xrContent) xrContent.classList.remove("hidden");
+	};
+
 	if ( !navigator.xr ) {
+		reportXRDebug({
+			stage: "no-xr",
+			navigatorXR: false,
+			userAgent: navigator.userAgent,
+		});
+		showNotSupported();
 		showMsg("WebXR not supported. Please use xrCompatible device and browser.", "error");
 		return;
 	}
+
 	navigator.xr.isSessionSupported("immersive-ar")
 	.then((isSupported) => {
+		reportXRDebug({
+			stage: "isSessionSupported",
+			isSupported,
+			userAgent: navigator.userAgent,
+		});
 		if ( isSupported ) {
+			showSupported();
 			showMsg("immersive-ar supported!");
 			// Make the loading and enter logo wrappers visible.
 			document.getElementById("loading_wrapper").classList.remove("hidden");
@@ -141,9 +242,16 @@ function init() {
 				btnAR.disabled = false;
 			});
 		} else {
+			showNotSupported();
 			showMsg("WebXR immersive-ar sessions not supported.", "error");
 		}
 	}).catch((err) => {
+		reportXRDebug({
+			stage: "isSessionSupported-error",
+			error: err?.message || String(err),
+			userAgent: navigator.userAgent,
+		});
+		showNotSupported();
 		showMsg(err, "error");
 	});
 
