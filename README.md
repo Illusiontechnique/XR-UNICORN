@@ -27,3 +27,19 @@ To publish this branch as a new private GitHub repo named "unicorn-XR" run the c
 ```
 
 If you want me to prepare further automated changes (Vite scaffold, ES module migration), tell me which step to do next.
+
+## New root helper scripts (fool-proof)
+
+At root you can now run:
+
+- `npm run start` (starts local dev server at http://localhost:5173)
+- `npm run restart` (rebuild then start)
+- `npm run update` (git pull + install deps)
+- `npm run update-run` (update then start)
+
+Native scripts:
+
+- Windows: `start.bat`, `restart.bat`, `update_and_run.bat`
+- macOS / Linux: `start.sh`, `restart.sh`, `update_and_run.sh`
+
+⚠️ Project files are now under `app/` for easier root-level maintenance.

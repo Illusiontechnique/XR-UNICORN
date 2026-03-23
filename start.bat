@@ -1,0 +1,3 @@
+@echo off
+echo [XR Unicorn] Starting dev server...
+npm run start

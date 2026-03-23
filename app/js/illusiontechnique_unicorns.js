@@ -33,6 +33,48 @@ function showMsg(msg, type) {
 		msgPane.classList.add("active");
 		msgPane.textContent = msgStr;
 	}
+
+	appendDebugLog(`showMsg(${type || 'log'}): ${msgStr || msg}`);
+}
+
+const MAX_DEBUG_LOG_LINES = 200;
+function appendDebugLog(text) {
+	const debugPane = document.getElementById("debug_log");
+	if (!debugPane) return;
+	debugPane.classList.add("visible");
+	const line = document.createElement("div");
+	line.textContent = `[${new Date().toISOString()}] ${text}`;
+	debugPane.appendChild(line);
+	while (debugPane.children.length > MAX_DEBUG_LOG_LINES) {
+		debugPane.removeChild(debugPane.firstChild);
+	}
+	debugPane.scrollTop = debugPane.scrollHeight;
+}
+
+function hookConsoleToDebugPanel() {
+	const origConsole = {
+		log: console.log.bind(console),
+		warn: console.warn.bind(console),
+		error: console.error.bind(console),
+		debug: console.debug ? console.debug.bind(console) : console.log.bind(console),
+	};
+
+	console.log = function(...args) {
+		origConsole.log(...args);
+		appendDebugLog(`LOG: ${args.map(a => (a && a.message) ? a.message : String(a)).join(' | ')}`);
+	};
+	console.warn = function(...args) {
+		origConsole.warn(...args);
+		appendDebugLog(`WARN: ${args.map(a => (a && a.message) ? a.message : String(a)).join(' | ')}`);
+	};
+	console.error = function(...args) {
+		origConsole.error(...args);
+		appendDebugLog(`ERROR: ${args.map(a => (a && a.message) ? a.message : String(a)).join(' | ')}`);
+	};
+	console.debug = function(...args) {
+		origConsole.debug(...args);
+		appendDebugLog(`DEBUG: ${args.map(a => (a && a.message) ? a.message : String(a)).join(' | ')}`);
+	};
 }
 
 function hideMsg() {
@@ -121,11 +163,16 @@ function init() {
 	// devices without remote debugging.
 	try {
 		const urlParams = new URLSearchParams(window.location.search);
-		if ( urlParams.get("debug") === "1" ) {
+		const hasDebug = (urlParams.get("debug") === "1");
+		if (hasDebug) {
+			g_debug = true;
+			hookConsoleToDebugPanel();
+
 			const debugMsg = (s) => {
 				const p = document.getElementById("msg_panel");
 				p.classList.add("active");
 				p.textContent = s;
+				appendDebugLog(`UI: ${s}`);
 				console.log(s);
 			};
 
@@ -135,18 +182,14 @@ function init() {
 					debugMsg(`ERROR: ${ev.message} @ ${ev.filename}:${ev.lineno}:${ev.colno}`);
 				} catch (e) { /* ignore */ }
 			});
+
 			window.addEventListener("unhandledrejection", (ev) => {
 				try {
 					const reason = ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason);
 					debugMsg(`UNHANDLED_PROMISE_REJECTION: ${reason}`);
 				} catch (e) { /* ignore */ }
 			});
-			// Also forward console.error messages
-			const _origConsoleError = console.error.bind(console);
-			console.error = function(...args) {
-				try { debugMsg(`console.error: ${args.map(a => (a && a.message) ? a.message : String(a)).join(' | ')}`); } catch (e) {}
-				_origConsoleError(...args);
-			};
+
 			debugMsg("DEBUG: checking navigator.xr...");
 			debugMsg(`navigator.xr present: ${Boolean(navigator.xr)}`);
 			if ( navigator.xr ) {

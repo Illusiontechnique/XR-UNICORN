@@ -6,9 +6,13 @@
     "dev": "vite",
     "dev:host": "vite --host",
     "dev:tunnel": "npx ngrok http 5173 --host-header=\"localhost:5173\"",
-    "debug:log-server": "node logs/log-server.js",
+    "debug:log-server": "node app/logs/log-server.js",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm run dev:host",
+    "restart": "npm run build && npm run dev:host",
+    "update": "git pull --ff-only && npm install",
+    "update-run": "npm run update && npm run start"
   },
   "dependencies": {
     "three": "^0.158.0"

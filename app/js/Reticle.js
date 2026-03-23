@@ -302,3 +302,10 @@ reticle.HitTestStates = Object.freeze({
 	STABLE: "stable"
 });
 
+if (typeof window !== 'undefined') {
+  window.reticle = reticle;
+}
+
+export { reticle };
+export default reticle;
+

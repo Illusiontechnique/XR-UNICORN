@@ -589,3 +589,10 @@ class AnimationManager {
 	}
 }
 
+if (typeof window !== 'undefined') {
+  window.AnimationManager = AnimationManager;
+}
+
+export { AnimationManager };
+export default AnimationManager;
+

@@ -40,13 +40,8 @@
    <link href="css/unicorns_styles.css" rel="stylesheet">
  
   <script type="module" src="/src/main.js"></script>
-  <!-- Legacy loader files remain in js/lib for compatibility -->
-  <script src="js/AnimationManager.js"></script>
-  <!-- AudioManager, HUD and TextureManager are provided by the Vite module entry -->
-  <script src="js/RaycasterWrapper.js"></script>
-  <script src="js/Reticle.js"></script>
-  <script src="js/ActionStateManager.js"></script>
-  <script src="js/illusiontechnique_unicorns.js" ></script>
+  <!-- Legacy files are now imported via ES module bootstrap in src/main.js -->
+
 
 
 
@@ -103,7 +98,8 @@
 
     
         <div id="container">
-           <div   id="msg_panel"></div> 
+           <div id="msg_panel"></div>
+           <div id="debug_log" class="hidden"></div>
           <div id="logos_container">
             <div class="abs_center_wrapper">
                 <img id="logo_base" src="assets/marks.svg">

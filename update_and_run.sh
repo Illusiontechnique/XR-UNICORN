@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+echo "[XR Unicorn] Pulling latest changes and installing deps..."
+git pull --ff-only
+npm install
+echo "[XR Unicorn] Starting dev server..."
+npm run start

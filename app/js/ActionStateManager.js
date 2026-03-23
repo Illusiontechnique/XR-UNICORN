@@ -109,3 +109,10 @@ class ActionStateManager {
 
 ActionStateManager.UNDEFINED_STATE = "undefined_state";
 
+if (typeof window !== 'undefined') {
+  window.ActionStateManager = ActionStateManager;
+}
+
+export { ActionStateManager };
+export default ActionStateManager;
+

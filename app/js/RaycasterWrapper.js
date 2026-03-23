@@ -126,3 +126,10 @@ class RaycasterWrapper {
 	}
 }
 
+if (typeof window !== 'undefined') {
+  window.RaycasterWrapper = RaycasterWrapper;
+}
+
+export { RaycasterWrapper };
+export default RaycasterWrapper;
+
